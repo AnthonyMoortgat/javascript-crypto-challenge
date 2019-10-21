@@ -4,13 +4,13 @@ async function init() {
     await nacl.ready
 }
 
-let key, serverPublicKey, serverPrivateKey
+let publicKey, serverPublicKey, serverPrivateKey
 let rx, tx
 
 module.exports = {
     setClientPublicKey: function (clientPublicKey) {
-        if (key != null && key !== clientPublicKey) {
-            throw "client public key already set"
+        if (publicKey != null && publicKey !== clientPublicKey) {
+            throw "Client public key already exist"
         }
         else {
             key = clientPublicKey
@@ -25,7 +25,7 @@ module.exports = {
         const sharedKeys = nacl.crypto_kx_server_session_keys(
             serverPublicKey,
             serverPrivateKey,
-            key
+            publicKey
         )
         rx = sharedKeys.sharedRx
         tx = sharedKeys.sharedTx
